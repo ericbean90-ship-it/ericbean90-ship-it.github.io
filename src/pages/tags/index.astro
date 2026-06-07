@@ -1,0 +1,29 @@
+---
+// 태그 목록 페이지
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAllTags, toUrlSlug } from '../../lib/blog';
+
+const tags = await getAllTags();
+---
+
+<BaseLayout title="Tags" description="태그별 글 모음">
+  <section class="hero container">
+    <h1 class="page-title">Tags</h1>
+    <p class="page-lead">태그를 눌러 관련 글을 모아볼 수 있어요.</p>
+  </section>
+
+  <section class="section container">
+    {tags.length > 0 ? (
+      <div class="tag-cloud">
+        {tags.map(({ tag, count }) => (
+          <a href={`/tags/${toUrlSlug(tag)}/`}>
+            #{tag}
+            <span class="pill pill--muted">{count}</span>
+          </a>
+        ))}
+      </div>
+    ) : (
+      <p class="page-lead">등록된 태그가 없습니다.</p>
+    )}
+  </section>
+</BaseLayout>

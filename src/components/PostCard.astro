@@ -1,0 +1,32 @@
+---
+// 블로그 글 카드
+import type { CollectionEntry } from 'astro:content';
+import { formatDate, resolveSlug } from '../lib/blog';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const slug = resolveSlug(post);
+---
+
+<article class="post-card">
+  <div class="post-card__meta">
+    <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+    <span class="pill">{post.data.category}</span>
+  </div>
+  <h2 class="post-card__title">
+    <a href={`/blog/${slug}/`}>{post.data.title}</a>
+  </h2>
+  {post.data.description && <p class="post-card__desc">{post.data.description}</p>}
+  {post.data.tags.length > 0 && (
+    <div class="tag-cloud">
+      {post.data.tags.map((tag) => (
+        <a class="pill pill--muted" href={`/tags/${tag}/`}>
+          #{tag}
+        </a>
+      ))}
+    </div>
+  )}
+</article>

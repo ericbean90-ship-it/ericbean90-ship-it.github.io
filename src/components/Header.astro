@@ -1,0 +1,23 @@
+---
+// 상단 네비게이션
+const pathname = Astro.url.pathname;
+
+function isActive(href: string): boolean {
+  if (href === '/') return pathname === '/';
+  return pathname.startsWith(href);
+}
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="brand" href="/">
+      <span class="brand__title">규동의 블로그</span>
+      <span class="brand__subtitle">이 무렵의 생각을 그냥 적어 두는 곳</span>
+    </a>
+    <nav class="nav" aria-label="주요 메뉴">
+      <a href="/" class:list={{ 'is-active': isActive('/') && pathname === '/' }}>Home</a>
+      <a href="/about/" class:list={{ 'is-active': isActive('/about') }}>About</a>
+      <a href="/blog/" class:list={{ 'is-active': isActive('/blog') }}>Blog</a>
+    </nav>
+  </div>
+</header>

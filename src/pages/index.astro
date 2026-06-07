@@ -1,17 +1,46 @@
 ---
+// 홈 — 최근 글 소개
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import { getPublishedPosts } from '../lib/blog';
 
+const posts = await getPublishedPosts();
+const latestPosts = posts.slice(0, 3);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Home" description="마크다운으로 쓰는 개인 블로그 홈">
+  <section class="hero container">
+    <span class="hero__eyebrow">Welcome</span>
+    <h1 class="hero__title">기록은 여행의 발자국처럼<br />천천히 쌓입니다.</h1>
+    <p class="hero__lead">
+      발자국이 오래되면 기록을 했다는 사실만 기억될 것입니다.
+    </p>
+  </section>
+
+  <section class="section container">
+    <div class="section__header">
+      <h2 class="section__title">최근 글</h2>
+      <a class="section__link" href="/blog/">전체 보기 →</a>
+    </div>
+    {latestPosts.length > 0 ? (
+      <div class="post-grid">
+        {latestPosts.map((post) => (
+          <PostCard post={post} />
+        ))}
+      </div>
+    ) : (
+      <p class="page-lead">아직 공개된 글이 없어요. `src/content/blog/YYYY/MM/`에 마크다운을 추가해 보세요.</p>
+    )}
+  </section>
+
+  <section class="section container">
+    <div class="section__header">
+      <h2 class="section__title">분류로 둘러보기</h2>
+    </div>
+    <div class="filter-bar">
+      <a href="/tags/">태그</a>
+      <a href="/categories/">카테고리</a>
+      <a href="/about/">About</a>
+    </div>
+  </section>
+</BaseLayout>

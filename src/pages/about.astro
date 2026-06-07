@@ -1,0 +1,23 @@
+---
+// About 페이지
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About" description="블로그 소개">
+  <section class="hero container">
+    <h1 class="page-title">About</h1>
+    <p class="page-lead">이 블로그는 Astro로 빌드하고 GitHub Pages에 올리는 정적 사이트예요.</p>
+  </section>
+
+  <section class="section container">
+    <div class="about-panel prose">
+      <p>
+        글은 <strong>월별 폴더</strong>에 마크다운으로 작성하고, URL은 <code>/blog/슬러그/</code> 형식으로
+        공개돼요. frontmatter에 카테고리와 태그를 적으면 자동으로 분류 페이지가 만들어집니다.
+      </p>
+      <p>
+        Home · About · Blog 메뉴로 이동할 수 있고, Blog 목록에서는 날짜순·월별로 글을 볼 수 있어요.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

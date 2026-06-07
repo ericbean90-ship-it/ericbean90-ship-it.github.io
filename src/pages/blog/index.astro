@@ -1,0 +1,37 @@
+---
+// Blog 글 목록 — 월별 그룹
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getPublishedPosts, groupPostsByMonth } from '../../lib/blog';
+
+const posts = await getPublishedPosts();
+const grouped = groupPostsByMonth(posts);
+---
+
+<BaseLayout title="Blog" description="블로그 글 목록">
+  <section class="hero container">
+    <h1 class="page-title">Blog</h1>
+    <p class="page-lead">월별로 정리된 글 목록이에요. 태그와 카테고리로도 둘러볼 수 있어요.</p>
+    <div class="filter-bar">
+      <a href="/tags/">태그 보기</a>
+      <a href="/categories/">카테고리 보기</a>
+    </div>
+  </section>
+
+  <section class="section container">
+    {grouped.length > 0 ? (
+      grouped.map(([month, monthPosts]) => (
+        <section class="month-group">
+          <h2 class="month-group__title">{month}</h2>
+          <div class="post-grid">
+            {monthPosts.map((post) => (
+              <PostCard post={post} />
+            ))}
+          </div>
+        </section>
+      ))
+    ) : (
+      <p class="page-lead">공개된 글이 없습니다.</p>
+    )}
+  </section>
+</BaseLayout>

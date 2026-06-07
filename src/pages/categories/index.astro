@@ -1,0 +1,29 @@
+---
+// 카테고리 목록 페이지
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAllCategories, toUrlSlug } from '../../lib/blog';
+
+const categories = await getAllCategories();
+---
+
+<BaseLayout title="Categories" description="카테고리별 글 모음">
+  <section class="hero container">
+    <h1 class="page-title">Categories</h1>
+    <p class="page-lead">카테고리별로 글을 모아볼 수 있어요.</p>
+  </section>
+
+  <section class="section container">
+    {categories.length > 0 ? (
+      <div class="category-list">
+        {categories.map(({ category, count }) => (
+          <a href={`/categories/${toUrlSlug(category)}/`}>
+            {category}
+            <span class="pill pill--muted">{count}</span>
+          </a>
+        ))}
+      </div>
+    ) : (
+      <p class="page-lead">등록된 카테고리가 없습니다.</p>
+    )}
+  </section>
+</BaseLayout>

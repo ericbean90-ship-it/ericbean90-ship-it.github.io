@@ -1,0 +1,40 @@
+---
+// 태그별 글 목록
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getAllTags, getPublishedPosts, toUrlSlug } from '../../lib/blog';
+
+export async function getStaticPaths() {
+  const tags = await getAllTags();
+  const posts = await getPublishedPosts();
+
+  return tags.map(({ tag }) => ({
+    params: { tag: toUrlSlug(tag) },
+    props: {
+      tag,
+      posts: posts.filter((post) => post.data.tags.includes(tag)),
+    },
+  }));
+}
+
+const { tag, posts } = Astro.props;
+---
+
+<BaseLayout title={`Tag: ${tag}`} description={`#${tag} 태그 글 목록`}>
+  <section class="hero container">
+    <h1 class="page-title">#{tag}</h1>
+    <p class="page-lead">{posts.length}개의 글</p>
+    <div class="filter-bar">
+      <a href="/tags/">← 모든 태그</a>
+      <a href="/blog/">Blog</a>
+    </div>
+  </section>
+
+  <section class="section container">
+    <div class="post-grid">
+      {posts.map((post) => (
+        <PostCard post={post} />
+      ))}
+    </div>
+  </section>
+</BaseLayout>
