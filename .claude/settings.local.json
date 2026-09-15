@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(chmod +x \"/Users/igyudong/claude/cursorstudy/blog/scripts/blog-writer.sh\")",
+      "Bash(chmod +x \"/Users/igyudong/claude/cursorstudy/blog/scripts/blog-deploy.sh\")",
+      "Bash(chmod +x \"/Users/igyudong/claude/Desktop/내블로그.app/Contents/MacOS/내블로그\")",
+      "Bash(xattr -dr com.apple.quarantine \"/Users/igyudong/claude/Desktop/내블로그.app\")",
+      "Bash(chmod +x /Users/igyudong/claude/cursorstudy/blog/scripts/blog-write.sh)"
+    ]
+  }
+}

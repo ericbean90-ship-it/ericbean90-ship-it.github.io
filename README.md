@@ -1,62 +1,68 @@
-# Blog (Astro + GitHub Pages)
+# MyBlog (Astro + GitHub Pages)
 
-Node(Astro)로 만든 정적 블로그예요. 마크다운으로 글을 쓰고 GitHub Pages 루트(`username.github.io`)에 배포합니다.
+Node(Astro) 정적 블로그. **글 작성·배포는 [Claude Code](./CLAUDE.md) 워크플로**를 사용합니다.
 
-## 기능
+- **사이트**: https://ericbean90-ship-it.github.io/
+- **저장소**: `ericbean90-ship-it/ericbean90-ship-it.github.io`
 
-- **Home / About / Blog** 메뉴
-- 글 파일 **월별 폴더** (`src/content/blog/YYYY/MM/`)
-- URL은 **`/blog/{slug}/`** (폴더 월 정보와 분리)
-- frontmatter **category**, **tags** → 분류 페이지
-- GitHub Actions로 Pages 자동 배포
+## Claude Code로 글 쓰기 (기본)
 
-## 로컬 실행
+저장소 루트에서 Claude Code 실행 후 예:
+
+```
+블로그 글 추가해줘. 주제: …
+한국어(경어체) + --- 아래 영어. 커밋·push까지.
+```
+
+자세한 규칙: **[CLAUDE.md](./CLAUDE.md)**
+
+## 로컬 미리보기
 
 ```bash
-cd blog
 npm install
 npm run dev
 ```
 
-빌드:
+## 수동 배포 (Claude Code 없을 때)
 
 ```bash
-npm run build
-npm run preview
+git add .
+git commit -m "글 게시: 제목"
+git push origin main
 ```
 
-## 글 작성
+`main` push → GitHub Actions → Pages 배포 (1~2분)
 
-`src/content/blog/2025/06/파일명.md`:
+## 기능
+
+- Home / About / Blog
+- 월별 폴더 `src/content/blog/YYYY/MM/`, URL `/blog/{slug}/`
+- tags · categories 분류 페이지
+- DM Sans + Noto Serif KR, Shiki 코드 하이라이트
+
+## 글 형식
+
+`src/content/blog/2026/06/example.md`:
 
 ```yaml
 ---
-title: "글 제목"
-date: 2025-06-07
+title: "제목"
+date: 2026-06-07
 category: "개발"
-tags: ["Node", "Astro"]
+tags: ["태그"]
 description: "한 줄 요약"
-slug: "원하는-url"   # 선택. 없으면 파일명 사용
+slug: "example"
 draft: false
 ---
 ```
-
-## GitHub Pages 배포
-
-1. GitHub에 **`username.github.io`** 저장소 생성
-2. 이 `blog/` 폴더 내용을 저장소 **루트**에 push
-3. Repo → Settings → Pages → Source: **GitHub Actions**
-4. `main` push 시 `.github/workflows/deploy.yml`이 빌드·배포
-
-`astro.config.mjs`의 `site` URL을 본인 `https://username.github.io`로 바꿔 주세요.
 
 ## 구조
 
 ```
 src/
   content/blog/YYYY/MM/*.md
-  pages/           # Home, About, Blog, tags, categories
+  pages/
   components/
   layouts/
-  lib/blog.ts      # slug, 태그·카테고리 집계
+  lib/blog.ts
 ```
